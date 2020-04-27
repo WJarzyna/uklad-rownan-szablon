@@ -80,4 +80,14 @@ double Vector<TYPE,SIZE>::len()
   return sqrt(*this * *this);
 }
 
+#define SIZE_C 2
+template <>
+double Vector<complex,SIZE_C>::len()
+{
+  complex z;
+  z=0;
+  for (unsigned i=0;i<SIZE_C;i++)  z+=x[i]*sprzeg(x[i]);
+  return sqrt(z.re);
+}
+
 
