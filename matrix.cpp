@@ -14,11 +14,47 @@ std::istream& operator >> (std::istream &str, Matrix<TYPE,SIZE> &A)
   return str;
 }
 
+
 template <class TYPE, unsigned SIZE>
-TYPE Matrix<TYPE,SIZE>::det_sar()
+TYPE Matrix<TYPE,SIZE>::det_lap()//wyznacznik laplace'a
 {
-  return V[0][0]*V[1][1]*V[2][2]+V[0][1]*V[1][2]*V[2][0]+V[0][2]*V[1][0]*V[2][1]-V[2][0]*V[1][1]*V[0][2]-V[2][1]*V[1][2]*V[2][2]-V[2][2]*V[1][0]*V[1][2];
+  bool done[SIZE];//tablica na info o przerobionych kolumnach
+  for (unsigned i=0; i<SIZE; i++)done[i]=false;//narazie zadna kolumna nie jest zrobiona
+  
+  return det_lap_part(done,0);
 }
+
+template <class TYPE, unsigned SIZE>
+TYPE Matrix<TYPE,SIZE>::det_lap_part(bool done[SIZE], int rows)//indeksy przerobionych kolumn w tablicy
+{
+  TYPE result;
+  result=0;
+  if (SIZE==1) result=V[0][0];//dla macierzy 1x1
+  else if(SIZE-rows==2)//dla macierzy 2x2
+    {
+      unsigned a[2], b=0;
+      for(unsigned i=0; i<SIZE&&b<2; i++) if(!done[i]) a[b++]=i;//znajdz i zapisz indeksy nieprzerobionych kolumn
+      result = V[a[0]][SIZE-2]*V[a[1]][SIZE-1] - V[a[1]][SIZE-2]*V[a[0]][SIZE-1];//policz wyzn. 2x2
+    }
+  else
+    {
+      double mul=1;
+      for (unsigned i=0; i<SIZE; i++)
+	{
+	  if(done[i]);
+	  else
+	    {
+	      done[i]=true;
+	      result+= V[i][rows]*det_lap_part(done,rows+1)*mul;//kolejne rozwiniecia
+	      mul*=-1;
+	      done[i]=false;
+	    }
+	}
+    }
+  return result;
+  
+}
+
 
 template <class TYPE, unsigned SIZE>
 void Matrix<TYPE,SIZE>::transpose()

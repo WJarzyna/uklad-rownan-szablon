@@ -4,6 +4,7 @@ template <class TYPE, unsigned SIZE>
 class Matrix
 {
   Vector<TYPE,SIZE> V[SIZE];
+  TYPE det_lap_part(bool done[SIZE], int row);
 public:
   
   const Vector<TYPE,SIZE> operator [] (int arg) const { return V[arg]; }
@@ -14,8 +15,7 @@ public:
   void operator = (const Matrix<TYPE,SIZE> &B);
   void colswap(int cnum, const Vector<TYPE,SIZE> &col);
 
-  
-  TYPE det_sar();
+  TYPE det_lap();
   Vector<TYPE,SIZE> operator * (const Vector<TYPE,SIZE> &X);
 };
 
