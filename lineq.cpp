@@ -1,37 +1,42 @@
 #include "lineq.hh"
 
-
-bool lin_eq::solve()
+template <class TYPE, unsigned SIZE>
+bool lin_eq<TYPE,SIZE>::solve()
 {
-  double main_det=det_sar(mat);
+  TYPE main_det=mat.det_lap();
 
-  if (main_det==0) return false;
+  if (main_det==0.0) return false;
 
-  for (int i=0; i<SIZE; i++)
+  for (unsigned i=0; i<SIZE; i++)
     {
-      Matrix matx=mat;
+      Matrix<TYPE,SIZE> matx=mat;
       matx.colswap(i, free);
       
-      solution[i]=det_sar(matx)/main_det;
+      solution[i]=matx.det_lap()/main_det;
     }
   return true;
 }
-    
-std::ostream& operator << (std::ostream& str, const lin_eq leq)
+
+
+
+template <class TYPE, unsigned SIZE>
+std::ostream& operator << (std::ostream& str, const lin_eq<TYPE,SIZE> leq)
 {
   int pos=(SIZE%2?SIZE-1:SIZE)/2;
-  for(int i=0; i<SIZE; i++)
+  for(unsigned i=0; i<SIZE; i++)
     {
       
       
       str<<'|'<<'\t';
-      for(int j=0; j<SIZE; j++) str<<leq.get_mat()[j][i]<<'\t';
+      for(unsigned j=0; j<SIZE; j++) str<<leq.get_mat()[j][i]<<'\t';
       str<<"| "<<"|x"<<i+1<<'|'<<(i==pos?'=':' ')<<'|'<<leq.get_free()[i]<<'|'<<'\n';
     }
   return str;
 }
-	  
-Vector lin_eq::err()
+
+
+template <class TYPE, unsigned SIZE>
+Vector<TYPE,SIZE> lin_eq<TYPE,SIZE>::err()
 {
   return mat*solution-free;
 }

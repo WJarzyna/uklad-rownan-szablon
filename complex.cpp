@@ -34,7 +34,11 @@ bool operator == (const complex arg1, const complex arg2)
   else return false;
 }
 
-
+bool operator == (const complex arg1, double arg2)
+{
+  if(modul(arg1)==arg2)return true;
+  else return false;
+}
 
 
 

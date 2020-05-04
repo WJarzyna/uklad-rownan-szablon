@@ -1,12 +1,12 @@
 #include "vect.cpp"
 
-#define SIZE_INT 3
-#define SIZE_C 2
+#define SIZE_INT 5
+#define SIZE_C 5
 
-template class Vector<int,SIZE_INT>;
+template class Vector<double,SIZE_INT>;
 
-template std::ostream& operator << (std::ostream &str, const Vector<int,SIZE_INT> &V);
-template std::istream& operator >> (std::istream &str, Vector<int,SIZE_INT> &V);
+template std::ostream& operator << (std::ostream &str, const Vector<double,SIZE_INT> &V);
+template std::istream& operator >> (std::istream &str, Vector<double,SIZE_INT> &V);
 
 
 template <>

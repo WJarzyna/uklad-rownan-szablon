@@ -1,17 +1,19 @@
 #include "matrix.hh"
 
+template <class TYPE, unsigned SIZE>
 class lin_eq
 {
-  Matrix mat;
-  Vector free,solution;
+  Matrix<TYPE,SIZE> mat;
+  Vector<TYPE,SIZE> free,solution;
 public:
   bool solve();
-  Vector& set_free () { return free; }
-  Matrix& set_mat () { return mat; }
-  const Vector get_free () const { return free; }
-  const Vector get_sol () const { return solution; }
-  const Matrix get_mat () const { return mat; }
-  Vector err();
+  Vector<TYPE,SIZE>& set_free () { return free; }
+  Matrix<TYPE,SIZE>& set_mat () { return mat; }
+  const Vector<TYPE,SIZE> get_free () const { return free; }
+  const Vector<TYPE,SIZE> get_sol () const { return solution; }
+  const Matrix<TYPE,SIZE> get_mat () const { return mat; }
+  Vector<TYPE,SIZE> err();
 };
 
-std::ostream& operator << (std::ostream& str, const lin_eq leq);
+template <class TYPE, unsigned SIZE>
+std::ostream& operator << (std::ostream& str, const lin_eq<TYPE,SIZE> leq);

@@ -19,6 +19,7 @@ std::ostream & operator << (std::ostream &str,const  complex in);
 std::istream & operator >> (std::istream &str,complex &in);
 
 bool operator == (const complex arg1,const  complex arg2);
+bool operator == (const complex arg1,double arg2);
 
 
 complex make(const double re,const  double im);

@@ -2,7 +2,6 @@
 #include <cmath>
 #include "complex.hh"
 
-//#define SIZE 3
 
 template <class TYPE, unsigned SIZE>
 class Vector
