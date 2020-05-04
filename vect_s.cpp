@@ -8,6 +8,17 @@ template class Vector<int,SIZE_INT>;
 template std::ostream& operator << (std::ostream &str, const Vector<int,SIZE_INT> &V);
 template std::istream& operator >> (std::istream &str, Vector<int,SIZE_INT> &V);
 
+
+template <>
+double Vector<complex,SIZE_C>::len()
+{
+  complex z;
+  z=0;
+  for (unsigned i=0;i<SIZE_C;i++)  z+=x[i]*sprzeg(x[i]);
+  return sqrt(z.re);
+}
+
+
 template class Vector<complex,SIZE_C>;
 
 template std::ostream& operator << (std::ostream &str, const Vector<complex,SIZE_C> &V);

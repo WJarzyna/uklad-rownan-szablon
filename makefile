@@ -1,9 +1,9 @@
 CC=g++
 CFLAGS=-pedantic -Wall -std=c++17 -iquote inc
 
-DEPS=lineq.hh matrix.hh vect.hh
+DEPS= vect.hh #lineq.hh matrix.hh
 
-OBJ=main.o matrix.o vect.o lineq.o
+OBJ=main.o vect.o #lineq.o matrix.o
 
 PROGNAME=urown.x
 

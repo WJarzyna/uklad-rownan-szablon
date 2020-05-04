@@ -1,59 +1,66 @@
 #include "matrix.hh"
 
-std::ostream& operator << (std::ostream& str, const Matrix &A)
+template <class TYPE, unsigned SIZE>
+std::ostream& operator << (std::ostream& str, const Matrix<TYPE,SIZE> &A)
 {
-  for (int i=0; i<SIZE; i++) str<<A[i]<<'\n';
+  for (unsigned i=0; i<SIZE; i++) str<<A[i]<<'\n';
   return str;
 }
 
-std::istream& operator >> (std::istream &str, Matrix &A)
+template <class TYPE, unsigned SIZE>
+std::istream& operator >> (std::istream &str, Matrix<TYPE,SIZE> &A)
 {
-  for(int i=0; i<SIZE; i++) str>>A[i];
+  for(unsigned i=0; i<SIZE; i++) str>>A[i];
   return str;
 }
 
-
-double det_sar(const Matrix &A)
+template <class TYPE, unsigned SIZE>
+TYPE Matrix<TYPE,SIZE>::det_sar()
 {
-  return A[0][0]*A[1][1]*A[2][2]+A[0][1]*A[1][2]*A[2][0]+A[0][2]*A[1][0]*A[2][1]-A[2][0]*A[1][1]*A[0][2]-A[2][1]*A[1][2]*A[2][2]-A[2][2]*A[1][0]*A[1][2];
+  return V[0][0]*V[1][1]*V[2][2]+V[0][1]*V[1][2]*V[2][0]+V[0][2]*V[1][0]*V[2][1]-V[2][0]*V[1][1]*V[0][2]-V[2][1]*V[1][2]*V[2][2]-V[2][2]*V[1][0]*V[1][2];
 }
-	  
-void Matrix::transpose()
+
+template <class TYPE, unsigned SIZE>
+void Matrix<TYPE,SIZE>::transpose()
 {
-  for(int i=0; i<SIZE; i++)
+  for(unsigned i=0; i<SIZE; i++)
     {
-      for(int j=0; j<i; j++)
+      for(unsigned j=0; j<i; j++)
 	{	  
 	  std::swap(V[i][j],V[j][i]);
 	}
     }
 }
 
-void Matrix::colswap(int cnum, const Vector col)
+template <class TYPE, unsigned SIZE>
+void Matrix<TYPE,SIZE>::colswap(int cnum, const Vector<TYPE,SIZE> &col)
 {
-  for(int i=0; i<SIZE; i++)
+  for(unsigned i=0; i<SIZE; i++)
     { 
       V[cnum][i]=col[i];
     }
 }
 
-Vector operator * (const Matrix A, const Vector X)
+template <class TYPE, unsigned SIZE>
+Vector<TYPE,SIZE> Matrix<TYPE,SIZE>::operator * (const Vector<TYPE,SIZE> &X)
 {
-  Vector result;
-  for (int i=0; i<SIZE; i++)
+  Vector<TYPE,SIZE> result;
+  for (unsigned i=0; i<SIZE; i++)
     {
-      double res=0;
-      for (int j=0; j<SIZE; j++)res+=A[j][i]*X[j];
+      TYPE res;
+      res=0;
+      for (unsigned j=0; j<SIZE; j++)res+=V[j][i]*X[j];
       result[i]=res;
     }
   return result;
 }
 
-void Matrix::operator = (const Matrix B)
+template <class TYPE, unsigned SIZE>
+void Matrix<TYPE,SIZE>::operator = (const Matrix<TYPE,SIZE> &B)
 {
-  for (int i=0; i<SIZE; i++)
+  for (unsigned i=0; i<SIZE; i++)
     {
-      for (int j=0; j<SIZE; j++)
+      for (unsigned j=0; j<SIZE; j++)
 	{
 	  V[i][j]=B[i][j];
 	}
